@@ -25,13 +25,21 @@
 
 (ensure-packages-are-installed
  '(color-theme
-   color-theme-zenburn
+   ;color-theme-blackboard ; No package for this!!
    color-theme-twilight
-   ;color-theme-blackboar ; No package for this!!
+   color-theme-zenburn
+
    idle-highlight-mode
+   windsize
+
    ruby-mode
    css-mode
    yaml-mode
+
+   clojure-mode
+   paredit
+   slime
+
    find-file-in-project
    smex
    ))
@@ -39,19 +47,23 @@
 
 (require 'color-theme)
 (setq color-theme-is-global t)
-;(color-theme-initialize)
 
 
 ;; Directory for stuff that's not in elpa or marmalade:
 (add-to-list 'load-path (concat user-emacs-directory "extras"))
 
+
+;; Default to my favorite color theme
 (require 'blackboard)
+(color-theme-blackboard)
+
 
 ;; Require a bunch of stuff
 (require 'uniquify) ; TODO: find out what this does and whether I need it
 (require 'recentf)  ; Keeps track of recently closed files
 (require 'ffap)     ; Find-File-At-Point - very useful
 
+(recentf-mode 1)
 
 
 ;; Always show the column number along with the line number.
@@ -63,7 +75,7 @@
 (setq save-place t)
 
 
-;; Idle highlight mode - can't live without it.
+;; Idle highlight mode - can't live without it. TODO - this doesn't work - put it in a hook?
 (idle-highlight-mode t)
 
 
@@ -72,7 +84,7 @@
 (auto-fill-mode t)
 
 
-;; For cleaning up buffers:
+;; Stuff from ESK, for cleaning up buffers:
 (defun untabify-buffer ()
   (interactive)
   (untabify (point-min) (point-max)))
@@ -176,8 +188,64 @@
      (set-face-foreground 'magit-diff-del "red3")))
 
 
+;; Clojure stuff
+
+;; Change paredit bindings - I can't get used to some of the built-in ones.
+(eval-after-load 'paredit
+  '(progn
+     (define-key paredit-mode-map (kbd "C-<left>") nil)
+     (define-key paredit-mode-map (kbd "M-<left>") 'paredit-forward-barf-sexp)
+     (define-key paredit-mode-map (kbd "C-<right>") nil)
+     (define-key paredit-mode-map (kbd "M-<right>") 'paredit-forward-slurp-sexp)
+     ))
+
+
+;; For when I open a read-only file, then want to edit it.
+(defun make-writable ()
+  (interactive)
+  (toggle-read-only -1)               ; make it writable
+  (chmod (buffer-file-name) #o666))   ; I really just want "+w", but I don't know how to do that
+
+
+;; Sometimes I want the left buffer on the right and v/v.
+(defun swap-buffers ()
+  (interactive)
+  (let* ((this-buffer (window-buffer))
+         (other-window (next-window))
+         (other-buffer (window-buffer other-window)))
+    (show-buffer other-window this-buffer)
+    (show-buffer (other-window 0) other-buffer)))
+
+
+;; Maxmize on startup. TODO - make this work on linux too
+(defun maximize ()
+  (interactive)
+  (w32-send-sys-command 61488))         ; no idea why this works, but
+                                        ; it does.
+
+;; Shenanigans to make "maximize-on-startup" actually work:
+(add-hook 'emacs-startup-hook
+          '(lambda ()
+             (run-at-time "1 sec" nil 'maximize)))
+
+
+;; Server-start. Not sure if this need to be in a hook, but it works well enough.
+(add-hook 'emacs-startup-hook
+          'server-start)
+
 
 ;; Key bindings
+
+;; Mine:
+(global-set-key (kbd "C-S-w") 'make-writable)
+(global-set-key (kbd "C-S-k") 'kill-this-buffer)
+(global-set-key (kbd "C-S-f") 'find-grep)
+
+(require 'windsize)
+(windsize-default-keybindings)
+
+
+;; Other keybindings, mostly taken from ESK (becuase that's what I got used to in my first year of emacs):
 
 ;; smex makes M-x better
 (smex-initialize)
@@ -203,7 +271,7 @@
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 
 ;; Jump to a definition in the current file. (This is awesome.)
-(global-set-key (kbd "C-x C-i") 'ido-imenu)
+(global-set-key (kbd "C-x C-i") 'imenu)
 
 ;; File finding
 (global-set-key (kbd "C-x f") 'recentf-ido-find-file)
@@ -230,3 +298,18 @@
 
 
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(blink-cursor-mode nil)
+ '(column-number-mode t)
+ '(show-paren-mode t)
+ '(tool-bar-mode nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:stipple nil :background "#0C1021" :foreground "#F8F8F8" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "outline" :family "DejaVu Sans Mono")))))
