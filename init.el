@@ -5,6 +5,8 @@
 ;; Turn off toolbar (I don't use it)
 (tool-bar-mode -1)
 
+(setq custom-file "~/.emacs.d/custom.el")
+
 
 ;; Add Marmalade repo.
 ;; This will cause "package-install" to have access to many, many more packages.
@@ -26,6 +28,7 @@
 (ensure-packages-are-installed
  '(color-theme
    ;color-theme-blackboard ; No package for this!!
+   color-theme-railscasts
    color-theme-twilight
    color-theme-zenburn
 
@@ -33,10 +36,14 @@
    windsize
 
    ruby-mode
+   ;inf-ruby
    css-mode
    yaml-mode
+   sass-mode
+   haml-mode
 
    clojure-mode
+   clojurescript-mode
    paredit
    slime
 
@@ -48,8 +55,12 @@
 (require 'color-theme)
 (setq color-theme-is-global t)
 
+(autoload 'color-theme-railscasts "color-theme-railscasts" nil t)
+(autoload 'color-theme-twilight "color-theme-twilight" nil t)
+(autoload 'color-theme-zenburn "color-theme-zenburn" nil t)
 
-;; Directory for stuff that's not in elpa or marmalade:
+
+;; Directory for stuff that's not in elpa or marmalade (eg: blackboard):
 (add-to-list 'load-path (concat user-emacs-directory "extras"))
 
 
@@ -59,7 +70,9 @@
 
 
 ;; Require a bunch of stuff
-(require 'uniquify) ; TODO: find out what this does and whether I need it
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'forward)
+
 (require 'recentf)  ; Keeps track of recently closed files
 (require 'ffap)     ; Find-File-At-Point - very useful
 
@@ -128,7 +141,6 @@
 (setq inhibit-startup-message t
       color-theme-is-global t
       shift-select-mode nil
-      uniquify-buffer-name-style 'forward
       whitespace-style '(face trailing lines-tail tabs)
       whitespace-line-column 120
       ediff-window-setup-function 'ediff-setup-windows-plain
@@ -234,6 +246,10 @@
           'server-start)
 
 
+
+
+
+
 ;; Key bindings
 
 ;; Mine:
@@ -243,7 +259,6 @@
 
 (require 'windsize)
 (windsize-default-keybindings)
-
 
 ;; Other keybindings, mostly taken from ESK (becuase that's what I got used to in my first year of emacs):
 
@@ -295,21 +310,3 @@
       (occur (if isearch-regexp isearch-string (regexp-quote isearch-string))))))
 
 
-
-
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(blink-cursor-mode nil)
- '(column-number-mode t)
- '(show-paren-mode t)
- '(tool-bar-mode nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:stipple nil :background "#0C1021" :foreground "#F8F8F8" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "outline" :family "DejaVu Sans Mono")))))
