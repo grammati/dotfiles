@@ -19,6 +19,8 @@
 (require 'package)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
+;(add-to-list 'package-archives
+;             '("tromey" . "http://tromey.com/elpa/") t)
 (package-initialize)
 
 ;; Function to install a list of packages
@@ -123,10 +125,9 @@
       ido-max-prospects 10)
 
 
-
 ;; Text mode
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
-(add-hook 'text-mode-hook 'turn-on-flyspell)
+;(add-hook 'text-mode-hook 'turn-on-auto-fill)
+;(add-hook 'text-mode-hook 'turn-on-flyspell)
 
 
 ;; Hippie expand: I don't really know how hippie-expand works, but I have always
@@ -216,6 +217,14 @@
     (show-buffer (other-window 0) other-buffer)))
 
 
+(defun dired-r ()
+  (interactive)
+  (let ((old-value dired-listing-switches))
+    (set-variable 'dired-listing-switches "-lR")
+    (ido-dired)
+    (set-variable 'dired-listing-switches old-value)))
+
+
 ;; Maxmize on startup. TODO - make this work on linux too
 (defun maximize ()
   (interactive)
@@ -248,6 +257,8 @@
 (when (file-exists-p "~/src/rinari")
   (add-to-list 'load-path "~/src/rinari")
   (require 'rinari))
+
+
 
 
 ;; Key bindings

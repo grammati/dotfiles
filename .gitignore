@@ -1,6 +1,10 @@
 *.elc
 *~
+.emacs.desktop
+bookmarks
 
 elpa/
+eshell/
 server/
+shell/
 url/
