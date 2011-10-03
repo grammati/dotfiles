@@ -12,6 +12,7 @@
 
 ;; Change where custom settings are stored (I don't want emacs touching my init.el)
 (setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
 
 
 ;; Add Marmalade repo.
@@ -167,6 +168,17 @@
      ))
 
 
+(defun dired-insert-subdir-recursive ()
+  (interactive)
+  (dired-insert-subdir (dired-get-filename) (concat dired-listing-switches "R")))
+
+(eval-after-load 'dired
+  '(progn
+     (define-key dired-mode-map (kbd "C-c s") 'dired-insert-subdir)
+     (define-key dired-mode-map (kbd "C-c r") 'dired-insert-subdir-recursive)
+     ))
+
+
 ;; Stuff from ESK, for cleaning up buffers:
 (defun untabify-buffer ()
   (interactive)
@@ -253,12 +265,23 @@
 (add-hook 'prog-mode-hook 'my-prog-mode-hook)
 
 
+(defun turn-on-paredit ()
+  (paredit-mode t))
+
+(add-hook 'lisp-mode-hook 'turn-on-paredit)
+
+
 ;; Rails
 (when (file-exists-p "~/src/rinari")
   (add-to-list 'load-path "~/src/rinari")
   (require 'rinari))
 
 
+(defun hide-eol ()
+  "Do not show ^M in files containing mixed UNIX and DOS line endings."
+  (interactive)
+  (setq buffer-display-table (make-display-table))
+  (aset buffer-display-table ?\^M []))
 
 
 ;; Key bindings
