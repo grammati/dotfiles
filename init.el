@@ -14,6 +14,9 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
+;; I finally figured out why opening and saving files was sooooooo
+;; slow!!!
+(setq vc-handled-backends nil)
 
 ;; Add Marmalade repo.
 ;; This will cause "package-install" to have access to many, many more packages.
@@ -270,6 +273,11 @@
 
 (add-hook 'lisp-mode-hook 'turn-on-paredit)
 
+(add-hook 'clojure-mode-hook 'turn-on-paredit)
+(add-hook 'clojure-mode-hook 
+          '(lambda ()
+             (define-key paredit-mode-map (kbd "{") 'paredit-open-curly)
+             (define-key paredit-mode-map (kbd "[") 'paredit-open-square)))
 
 ;; Rails
 (when (file-exists-p "~/src/rinari")
@@ -287,9 +295,10 @@
 ;; Key bindings
 
 ;; Misc:
-(global-set-key (kbd "C-S-w") 'make-writable)
-(global-set-key (kbd "C-S-k") 'kill-this-buffer)
-(global-set-key (kbd "C-S-f") 'find-grep)
+(global-set-key (kbd "C-S-w")   'make-writable)
+(global-set-key (kbd "C-S-k")   'kill-this-buffer)
+(global-set-key (kbd "C-S-f")   'find-grep)
+(global-set-key (kbd "C-x M-d") 'dired-r)
 
 ;; Window management - windmove to switch, windsize to resize
 (require 'windsize)
