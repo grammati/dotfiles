@@ -14,6 +14,9 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
+;; Save session
+(desktop-save-mode 1)
+
 
 ;; Add Marmalade repo.
 ;; This will cause "package-install" to have access to many, many more packages.
@@ -269,6 +272,7 @@
   (paredit-mode t))
 
 (add-hook 'lisp-mode-hook 'turn-on-paredit)
+(add-hook 'clojure-mode-hook 'turn-on-paredit)
 
 
 ;; Rails

@@ -2,9 +2,11 @@
 *~
 .emacs.desktop
 bookmarks
+session.*
 
 elpa/
 eshell/
 server/
 shell/
+swank/
 url/
