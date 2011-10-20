@@ -14,15 +14,13 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
-<<<<<<< HEAD
 ;; Save session
 (desktop-save-mode 1)
 
-=======
 ;; I finally figured out why opening and saving files was sooooooo
 ;; slow!!!
 (setq vc-handled-backends nil)
->>>>>>> origin/master
+
 
 ;; Add Marmalade repo.
 ;; This will cause "package-install" to have access to many, many more packages.
