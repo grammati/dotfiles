@@ -129,6 +129,11 @@
       ido-max-prospects 10)
 
 
+;; DOS mode for batch files
+(autoload 'dos-mode "dos" nil t)
+(add-to-list 'auto-mode-alist '(".bat" . dos-mode))
+
+
 ;; Text mode
 ;(add-hook 'text-mode-hook 'turn-on-auto-fill)
 ;(add-hook 'text-mode-hook 'turn-on-flyspell)
@@ -270,8 +275,6 @@
 
 (defun turn-on-paredit ()
   (paredit-mode t))
-
-(add-hook 'lisp-mode-hook 'turn-on-paredit)
 
 (add-hook 'clojure-mode-hook 'turn-on-paredit)
 (add-hook 'clojure-mode-hook 
