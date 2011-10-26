@@ -14,9 +14,13 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
+;; Save session
+(desktop-save-mode 1)
+
 ;; I finally figured out why opening and saving files was sooooooo
 ;; slow!!!
 (setq vc-handled-backends nil)
+
 
 ;; Add Marmalade repo.
 ;; This will cause "package-install" to have access to many, many more packages.
@@ -275,6 +279,11 @@
 
 (defun turn-on-paredit ()
   (paredit-mode t))
+
+(add-hook 'lisp-mode-hook 'turn-on-paredit)
+
+(add-hook 'lisp-mode-hook 'turn-on-paredit)
+(add-hook 'clojure-mode-hook 'turn-on-paredit)
 
 (add-hook 'clojure-mode-hook 'turn-on-paredit)
 (add-hook 'clojure-mode-hook 
