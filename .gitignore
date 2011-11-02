@@ -1,8 +1,9 @@
 *.elc
 *~
-.emacs.desktop
+.emacs.desktop*
 bookmarks
 session.*
+tramp
 
 elpa/
 eshell/

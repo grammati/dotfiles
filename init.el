@@ -60,13 +60,15 @@
    haml-mode
 
    clojure-mode
-   clojurescript-mode
    paredit
-   slime
 
    find-file-in-project
    smex
    ))
+
+
+;; Install the packages I like to have.
+(ensure-packages-are-installed my-packages)
 
 
 (require 'color-theme)
@@ -137,6 +139,11 @@
 (autoload 'dos-mode "dos" nil t)
 (add-to-list 'auto-mode-alist '(".bat" . dos-mode))
 
+;; Groovy mode
+(autoload 'groovy-mode "groovy-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.groovy" . groovy-mode))
+; groovy mode does not inherit from prog-mode
+(add-hook 'groovy-mode-hook 'turn-on-idle-hilight)
 
 ;; Text mode
 ;(add-hook 'text-mode-hook 'turn-on-auto-fill)
@@ -265,11 +272,14 @@
           'server-start)
 
 
+(defun turn-on-idle-hilight ()
+  (idle-highlight-mode t))
+
 ;; Set up buffers for prog-mode. This hook should run when opening any
 ;; file that contains code (i.e. not plain text)
 (defun my-prog-mode-hook ()
   ;; Idle highlight mode - can't live without it.
-  (idle-highlight-mode t)
+  (turn-on-idle-hilight)
 
   (set (make-local-variable 'comment-auto-fill-only-comments) t)
   (auto-fill-mode t))
@@ -281,9 +291,6 @@
   (paredit-mode t))
 
 (add-hook 'lisp-mode-hook 'turn-on-paredit)
-
-(add-hook 'lisp-mode-hook 'turn-on-paredit)
-(add-hook 'clojure-mode-hook 'turn-on-paredit)
 
 (add-hook 'clojure-mode-hook 'turn-on-paredit)
 (add-hook 'clojure-mode-hook 
@@ -336,6 +343,9 @@
 ;; Turn on the menu bar for exploring new modes
 (global-set-key (kbd "C-<f10>") 'menu-bar-mode)
 
+;; Turn paredit on and off easily
+(global-set-key (kbd "<f9>") 'paredit-mode)
+
 ;; Font size
 (define-key global-map (kbd "C-+") 'text-scale-increase)
 (define-key global-map (kbd "C--") 'text-scale-decrease)
@@ -361,10 +371,3 @@
     (let ((case-fold-search isearch-case-fold-search))
       (occur (if isearch-regexp isearch-string (regexp-quote isearch-string))))))
 
-
-
-;; Finally, install all the packages I like to have. I do this at the
-;; end so that if anything goes wrong (eg: I add a new package, and
-;; it's not found in the archive), then all my other setup has
-;; completed.
-(ensure-packages-are-installed my-packages)
