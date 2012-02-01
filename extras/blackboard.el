@@ -51,7 +51,7 @@
      (font-lock-variable-name-face ((t (:foreground "#FF6400"))))
      (font-lock-warning-face ((t (:bold t :foreground "Pink"))))
      (gui-element ((t (:background "#D4D0C8" :foreground "black"))))
-     (region ((t (:background "#253B76"))))
+     ;(region ((t (:background "#253B76"))))
      (mode-line ((t (:background "grey75" :foreground "black"))))
      (highlight ((t (:background "#222222"))))
      (highline-face ((t (:background "SeaGreen"))))
@@ -60,6 +60,13 @@
      (text-cursor ((t (:background "yellow" :foreground "black"))))
      (toolbar ((t (nil))))
      (underline ((nil (:underline nil))))
-     (zmacs-region ((t (:background "snow" :foreground "ble")))))))
+     (zmacs-region ((t (:background "snow" :foreground "ble"))))
+
+     ;; My own additions:
+     (minibuffer-prompt ((t (:bold t :foreground "#FF6600"))))
+     (region ((t (:background "#763B25"))))
+     (idle-highlight ((t (:background "#381812"))))
+
+     )))
 
 (provide 'blackboard)
