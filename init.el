@@ -1,6 +1,8 @@
 ;; My init.el
 ;; Most of the code here was scavenged from the Emacs Starter Kit (thanks Phil!), and modified to suit me.
 
+;; The single most important thing in any .emacs file:
+(set-message-beep 'silent)
 
 ;; Turn off toolbar (I don't use it)
 (tool-bar-mode -1)
@@ -21,14 +23,18 @@
 ;; slow!!!
 (setq vc-handled-backends nil)
 
+;; Use the rectangle selection from cua mode, but not the rest of cua.
+(setq cua-enable-cua-keys nil)
+(cua-mode t)
+
 
 ;; Add Marmalade repo.
 ;; This will cause "package-install" to have access to many, many more packages.
 (require 'package)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
-;(add-to-list 'package-archives
-;             '("tromey" . "http://tromey.com/elpa/") t)
+(add-to-list 'package-archives
+             '("tromey" . "http://tromey.com/elpa/") t)
 (package-initialize)
 
 ;; Function to install a list of packages
@@ -41,8 +47,7 @@
       (message "Installing %s" (symbol-name package))
       (package-install package))))
 
-;; These are the packages that like to have
-;; They get installed at the very end of this file
+;; List of packages that like to have
 (defvar my-packages
  '(color-theme
    ;color-theme-blackboard ; No package for this!!
@@ -58,6 +63,8 @@
    yaml-mode
    sass-mode
    haml-mode
+   inf-ruby
+   rinari
 
    clojure-mode
    paredit
@@ -67,7 +74,7 @@
    ))
 
 
-;; Install the packages I like to have.
+;; Install packages
 (ensure-packages-are-installed my-packages)
 
 
@@ -111,6 +118,7 @@
 
 ;; Never insert tabs. Tabs are the tool of the devil.
 (set-default 'indent-tabs-mode nil)
+(set-default 'tab-width 4)
 
 
 ;; Configure various thingies.
@@ -123,7 +131,7 @@
       )
 
 
-;; ido-mode - TODO: find out what the hell "ido" means... and what this mode does.
+;; ido-mode
 (ido-mode t)
 (setq ido-enable-prefix nil
       ido-enable-flex-matching t
@@ -145,9 +153,21 @@
 ; groovy mode does not inherit from prog-mode
 (add-hook 'groovy-mode-hook 'turn-on-idle-hilight)
 
+;; Log4J mode
+(autoload 'log4j-mode "log4j-mode" "Major mode for viewing log files." t)
+;(add-to-list 'auto-mode-alist '("\\.log\\'" . log4j-mode))
+
+
 ;; Text mode
 ;(add-hook 'text-mode-hook 'turn-on-auto-fill)
 ;(add-hook 'text-mode-hook 'turn-on-flyspell)
+
+;; Emacs is awsome, except when it comes to indenting code. Sigh.
+(defun tabs-mode ()
+  (interactive)
+  (setq indent-tabs-mode t
+        tab-with 4
+        js-indent-level 4))
 
 
 ;; Hippie expand: I don't really know how hippie-expand works, but I have always
@@ -193,7 +213,6 @@
 
 (eval-after-load 'dired
   '(progn
-     (define-key dired-mode-map (kbd "C-c s") 'dired-insert-subdir)
      (define-key dired-mode-map (kbd "C-c r") 'dired-insert-subdir-recursive)
      ))
 
@@ -318,6 +337,7 @@
 (global-set-key (kbd "C-S-k")   'kill-this-buffer)
 (global-set-key (kbd "C-S-f")   'find-grep)
 (global-set-key (kbd "C-x M-d") 'dired-r)
+(global-set-key (kbd "<f8>")    'toggle-truncate-lines)
 
 ;; Window management - windmove to switch, windsize to resize
 (require 'windsize)
@@ -371,3 +391,4 @@
     (let ((case-fold-search isearch-case-fold-search))
       (occur (if isearch-regexp isearch-string (regexp-quote isearch-string))))))
 
+(put 'upcase-region 'disabled nil)

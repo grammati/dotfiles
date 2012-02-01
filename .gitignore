@@ -1,7 +1,9 @@
 *.elc
 *~
 .emacs.desktop*
+.smex-items
 bookmarks
+places
 session.*
 tramp
 
