@@ -2,7 +2,8 @@
 ;; Most of the code here was scavenged from the Emacs Starter Kit (thanks Phil!), and modified to suit me.
 
 ;; The single most important thing in any .emacs file:
-(set-message-beep 'silent)
+(if (fboundp 'set-message-beep)
+  (set-message-beep 'silent))
 
 ;; Turn off toolbar (I don't use it)
 (tool-bar-mode -1)
@@ -66,7 +67,7 @@
    haml-mode
    inf-ruby
    less-css-mode
-   rinari
+   ;rinari
 
    clojure-mode
    paredit
@@ -190,8 +191,8 @@
      (add-to-list 'grep-find-ignored-files "*.class")))
 
 ;; ibuffer mode sets C-x C-f to something less cool than ido
-(eval-after-load 'ibuffer-mode
-  (define-key ibuffer-mode-map (kbd "C-x C-f") nil))
+(eval-after-load 'ibuffer
+  '(define-key ibuffer-mode-map (kbd "C-x C-f") nil))
 
 ;; Cosmetics (copied from ESK)
 (eval-after-load 'diff-mode
