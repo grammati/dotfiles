@@ -62,8 +62,10 @@
    css-mode
    yaml-mode
    sass-mode
+   scss-mode
    haml-mode
    inf-ruby
+   less-css-mode
    rinari
 
    clojure-mode
@@ -161,6 +163,9 @@
 ;; Text mode
 ;(add-hook 'text-mode-hook 'turn-on-auto-fill)
 ;(add-hook 'text-mode-hook 'turn-on-flyspell)
+
+;; Ruby
+(add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
 
 ;; Emacs is awsome, except when it comes to indenting code. Sigh.
 (defun tabs-mode ()
