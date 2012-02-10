@@ -2,7 +2,8 @@
 ;; Most of the code here was scavenged from the Emacs Starter Kit (thanks Phil!), and modified to suit me.
 
 ;; The single most important thing in any .emacs file:
-(set-message-beep 'silent)
+(if (fboundp 'set-message-beep)
+  (set-message-beep 'silent))
 
 ;; Turn off toolbar (I don't use it)
 (tool-bar-mode -1)
@@ -62,9 +63,11 @@
    css-mode
    yaml-mode
    sass-mode
+   scss-mode
    haml-mode
    inf-ruby
-   rinari
+   less-css-mode
+   ;rinari
 
    clojure-mode
    paredit
@@ -162,6 +165,9 @@
 ;; Text mode
 ;(add-hook 'text-mode-hook 'turn-on-auto-fill)
 ;(add-hook 'text-mode-hook 'turn-on-flyspell)
+
+;; Ruby
+(add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
 
 ;; Emacs is awsome, except when it comes to indenting code. Sigh.
 (defun tabs-mode ()
