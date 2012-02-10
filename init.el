@@ -120,6 +120,7 @@
 (set-default 'indent-tabs-mode nil)
 (set-default 'tab-width 4)
 
+(set-default 'truncate-lines t)
 
 ;; Configure various thingies.
 (setq inhibit-startup-message t
@@ -185,8 +186,8 @@
      (add-to-list 'grep-find-ignored-files "*.class")))
 
 ;; ibuffer mode sets C-x C-f to something less cool than ido
-(eval-after-load 'ibuffer-mode
-  (define-key ibuffer-mode-map (kbd "C-x C-f") nil))
+(eval-after-load 'ibuffer
+  '(define-key ibuffer-mode-map (kbd "C-x C-f") nil))
 
 ;; Cosmetics (copied from ESK)
 (eval-after-load 'diff-mode
