@@ -174,7 +174,8 @@
   (interactive)
   (setq indent-tabs-mode t
         tab-with 4
-        js-indent-level 4))
+        js-indent-level 4
+        c-indent-level 4))
 
 
 ;; Hippie expand: I don't really know how hippie-expand works, but I have always
@@ -275,6 +276,17 @@
          (other-buffer (window-buffer other-window)))
     (show-buffer other-window this-buffer)
     (show-buffer (other-window 0) other-buffer)))
+
+
+;; For when I visit a file, and it opens in the wrong window.
+(defun move-buffer-to-other-window ()
+  (interactive)
+  (let ((m (point-marker)))
+    (bury-buffer)
+    (other-window 1)
+    (switch-to-buffer (marker-buffer m))))
+
+(global-set-key (kbd "C-S-o") 'move-buffer-to-other-window)
 
 
 (defun dired-r ()
