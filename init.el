@@ -5,8 +5,10 @@
 (if (fboundp 'set-message-beep)
   (set-message-beep 'silent))
 
-;; Turn off toolbar (I don't use it)
+;; GUI stuff
 (tool-bar-mode -1)
+(scroll-bar-mode -1)
+(set-fringe-style 'no-fringes)
 
 ;; The default frame title in emacs is not very useful
 (when window-system
@@ -68,6 +70,7 @@
    inf-ruby
    less-css-mode
    ;rinari
+   coffee-mode
 
    clojure-mode
    paredit
