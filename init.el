@@ -8,7 +8,7 @@
 ;; GUI stuff
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-(set-fringe-style 'no-fringes)
+(set-fringe-style 0)
 
 ;; The default frame title in emacs is not very useful
 (when window-system
@@ -56,7 +56,6 @@
    ;color-theme-blackboard ; No package for this!!
    color-theme-railscasts
    color-theme-twilight
-   color-theme-zenburn
 
    idle-highlight-mode
    windsize
