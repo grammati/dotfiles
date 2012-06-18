@@ -1,3 +1,4 @@
+
 ;; My init.el
 ;; Most of the code here was scavenged from the Emacs Starter Kit (thanks Phil!), and modified to suit me.
 
@@ -19,9 +20,6 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
-;; Save session
-(desktop-save-mode 1)
-
 ;; I finally figured out why opening and saving files was sooooooo
 ;; slow!!!
 (setq vc-handled-backends nil)
@@ -34,10 +32,8 @@
 ;; Add Marmalade repo.
 ;; This will cause "package-install" to have access to many, many more packages.
 (require 'package)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(add-to-list 'package-archives
-             '("tromey" . "http://tromey.com/elpa/") t)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives '("tromey" . "http://tromey.com/elpa/") t)
 (package-initialize)
 
 ;; Function to install a list of packages
@@ -50,13 +46,15 @@
       (message "Installing %s" (symbol-name package))
       (package-install package))))
 
+;; Color theme
+(add-to-list 'load-path "~/lib/color-theme")
+(require 'color-theme)
+(color-theme-initialize)
+(setq color-theme-is-global t)
+
 ;; List of packages that like to have
 (defvar my-packages
- '(color-theme
-   ;color-theme-blackboard ; No package for this!!
-   color-theme-railscasts
-   color-theme-twilight
-
+ '(
    idle-highlight-mode
    windsize
 
@@ -83,17 +81,9 @@
 (ensure-packages-are-installed my-packages)
 
 
-(require 'color-theme)
-(setq color-theme-is-global t)
-
-;; These do not define their own autoloads:
-(autoload 'color-theme-railscasts "color-theme-railscasts" nil t)
-(autoload 'color-theme-twilight "color-theme-twilight" nil t)
-(autoload 'color-theme-zenburn "color-theme-zenburn" nil t)
-
-
 ;; Directories for stuff that's not in elpa or marmalade (eg: blackboard):
 (add-to-list 'load-path (concat user-emacs-directory "extras"))
+
 
 ;; Default to my favorite color theme (currently in "extras" - there is no package)
 (require 'blackboard)
