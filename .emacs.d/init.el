@@ -1,4 +1,3 @@
-
 ;; My init.el
 ;; Most of the code here was scavenged from the Emacs Starter Kit (thanks Phil!), and modified to suit me.
 
@@ -28,11 +27,19 @@
 (setq cua-enable-cua-keys nil)
 (cua-mode t)
 
+;; http://stackoverflow.com/questions/9435019/how-do-i-source-my-zshrc-within-emacs
+(let ((path (shell-command-to-string ". ~/.zshrc; echo -n $PATH")))
+  (setenv "PATH" path)
+  (setq exec-path 
+        (append
+         (split-string-and-unquote path ":")
+         exec-path)))
 
 ;; Add Marmalade repo.
 ;; This will cause "package-install" to have access to many, many more packages.
 (require 'package)
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (add-to-list 'package-archives '("tromey" . "http://tromey.com/elpa/") t)
 (package-initialize)
 
@@ -51,6 +58,14 @@
 (require 'color-theme)
 (color-theme-initialize)
 (setq color-theme-is-global t)
+
+;; Color themes from other sources (git checkouts, etc)
+(when (file-accessible-directory-p "~/lib/emacs/themes")
+  (add-to-list 'load-path "~/lib/emacs/themes")
+  (require 'color-theme-railscasts)
+  (require 'color-theme-solarized)
+  (require 'color-theme-twilight)
+  (require 'zenburn-theme))
 
 ;; List of packages that like to have
 (defvar my-packages
