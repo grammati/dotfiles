@@ -19,6 +19,13 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
+(let ((is-mac (eq window-system 'darwin)))
+  (custom-set-faces
+   (if is-mac
+       '(default ((t (:inherit nil :stipple nil :background "#0C1021" :foreground "#F8F8F8" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 139 :width normal :foundry "unknown" :family "Monaco"))))
+       '(default ((t (:inherit nil :stipple nil :background "#0C1021" :foreground "#F8F8F8" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
+       )))
+
 ;; I finally figured out why opening and saving files was sooooooo
 ;; slow!!!
 (setq vc-handled-backends nil)
@@ -35,8 +42,8 @@
          (split-string-and-unquote path ":")
          exec-path)))
 
-;; Add Marmalade repo.
-;; This will cause "package-install" to have access to many, many more packages.
+
+;; Set up package archives
 (require 'package)
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
@@ -53,19 +60,6 @@
       (message "Installing %s" (symbol-name package))
       (package-install package))))
 
-;; Color theme
-(add-to-list 'load-path "~/lib/color-theme")
-(require 'color-theme)
-(color-theme-initialize)
-(setq color-theme-is-global t)
-
-;; Color themes from other sources (git checkouts, etc)
-(when (file-accessible-directory-p "~/lib/emacs/themes")
-  (add-to-list 'load-path "~/lib/emacs/themes")
-  (require 'color-theme-railscasts)
-  (require 'color-theme-solarized)
-  (require 'color-theme-twilight)
-  (require 'zenburn-theme))
 
 ;; List of packages that like to have
 (defvar my-packages
@@ -89,8 +83,11 @@
 
    find-file-in-project
    smex
-   ))
 
+   color-theme-solarized
+   color-theme-twilight
+   zenburn
+   ))
 
 ;; Install packages
 (ensure-packages-are-installed my-packages)
@@ -98,7 +95,6 @@
 
 ;; Directories for stuff that's not in elpa or marmalade (eg: blackboard):
 (add-to-list 'load-path (concat user-emacs-directory "extras"))
-
 
 ;; Default to my favorite color theme (currently in "extras" - there is no package)
 (require 'blackboard)
