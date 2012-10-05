@@ -19,7 +19,7 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
-(let ((is-mac (eq window-system 'darwin)))
+(let ((is-mac (eq system-type 'darwin)))
   (custom-set-faces
    (if is-mac
        '(default ((t (:inherit nil :stipple nil :background "#0C1021" :foreground "#F8F8F8" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 139 :width normal :foundry "unknown" :family "Monaco"))))
@@ -80,13 +80,17 @@
 
    clojure-mode
    paredit
+   nrepl
 
    find-file-in-project
    smex
 
+   color-theme
    color-theme-solarized
    color-theme-twilight
    zenburn
+
+   magit
    ))
 
 ;; Install packages
@@ -96,10 +100,12 @@
 ;; Directories for stuff that's not in elpa or marmalade (eg: blackboard):
 (add-to-list 'load-path (concat user-emacs-directory "extras"))
 
-;; Default to my favorite color theme (currently in "extras" - there is no package)
-(require 'blackboard)
-(color-theme-blackboard)
+;; Autoloads don't seem to work for some stuff
+(autoload 'color-theme-twilight "color-theme-twilight" nil t)
+(autoload 'color-theme-blackboard "blackboard" nil t)
 
+;; Default to my favorite color theme
+(color-theme-zenburn)
 
 ;; uniquify - makes sure buffer names are unique in a sensible way.
 (require 'uniquify)
@@ -334,13 +340,9 @@
 (defun turn-on-paredit ()
   (paredit-mode t))
 
-(add-hook 'lisp-mode-hook 'turn-on-paredit)
-
+(add-hook 'emacs-lisp-mode-hook 'turn-on-paredit)
 (add-hook 'clojure-mode-hook 'turn-on-paredit)
-(add-hook 'clojure-mode-hook 
-          '(lambda ()
-             (define-key paredit-mode-map (kbd "{") 'paredit-open-curly)
-             (define-key paredit-mode-map (kbd "[") 'paredit-open-square)))
+
 
 ;; Rails
 (when (file-exists-p "~/src/rinari")
