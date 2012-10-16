@@ -9,6 +9,7 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (set-fringe-style 0)
+(global-hl-line-mode)
 
 ;; The default frame title in emacs is not very useful
 (when window-system
@@ -82,6 +83,11 @@
    paredit
    nrepl
 
+   auto-complete
+   ac-nrepl
+
+   scala-mode
+   
    find-file-in-project
    smex
 
@@ -340,8 +346,19 @@
 (defun turn-on-paredit ()
   (paredit-mode t))
 
+(defun esk-paredit-nonlisp ()
+  "Turn on paredit mode for non-lisps."
+  (interactive)
+  (set (make-local-variable 'paredit-space-for-delimiter-predicates)
+       '((lambda (endp delimiter) nil)))
+  (paredit-mode 1))
+
 (add-hook 'emacs-lisp-mode-hook 'turn-on-paredit)
-(add-hook 'clojure-mode-hook 'turn-on-paredit)
+(add-hook 'clojure-mode-hook    'turn-on-paredit)
+
+(add-hook 'ruby-mode-hook       'esk-paredit-nonlisp)
+(add-hook 'espresso-mode-hook   'esk-paredit-nonlisp)
+(add-hook 'js-mode-hook         'esk-paredit-nonlisp)
 
 
 ;; Rails
@@ -419,3 +436,4 @@
       (occur (if isearch-regexp isearch-string (regexp-quote isearch-string))))))
 
 (put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
