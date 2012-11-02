@@ -4,8 +4,10 @@
 ;; The single most important thing in any .emacs file:
 (if (fboundp 'set-message-beep)
   (set-message-beep 'silent))
+(if (boundp 'ring-bell-function)
+  (setq ring-bell-function '(lambda () nil)))
 
-;; GUI stuff
+;; gui stuff
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (set-fringe-style 0)
@@ -112,6 +114,21 @@
 
 ;; Default to my favorite color theme
 (color-theme-zenburn)
+
+
+
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
+
+
+;; Scala / Ensime
+;(require 'scala-mode-auto)
+(add-to-list 'auto-mode-alist '(".scala" . scala-mode))
+(add-to-list 'load-path (expand-file-name "~/lib/ensime/elisp"))
+(require 'ensime)
+(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+
+
 
 ;; uniquify - makes sure buffer names are unique in a sensible way.
 (require 'uniquify)
