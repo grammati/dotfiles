@@ -69,6 +69,7 @@
  '(
    idle-highlight-mode
    windsize
+   expand-region
 
    ruby-mode
    css-mode
@@ -124,9 +125,10 @@
 ;; Scala / Ensime
 ;(require 'scala-mode-auto)
 (add-to-list 'auto-mode-alist '(".scala" . scala-mode))
-(add-to-list 'load-path (expand-file-name "~/lib/ensime/elisp"))
-(require 'ensime)
-(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+(when (file-exists-p "~/lib/ensime")
+  (add-to-list 'load-path (expand-file-name "~/lib/ensime/elisp"))
+  (require 'ensime)
+  (add-hook 'scala-mode-hook 'ensime-scala-mode-hook))
 
 
 
@@ -199,7 +201,9 @@
 ;(add-hook 'text-mode-hook 'turn-on-flyspell)
 
 ;; Ruby
-(add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
+(dolist (f '("Gemfile$" "buildfile"))
+  (add-to-list 'auto-mode-alist `(,f . ruby-mode)))
+
 
 ;; Emacs is awsome, except when it comes to indenting code. Sigh.
 (defun tabs-mode ()
