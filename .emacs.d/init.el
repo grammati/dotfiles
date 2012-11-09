@@ -97,7 +97,7 @@
    color-theme
    color-theme-solarized
    color-theme-twilight
-   zenburn
+   zenburn-theme
 
    magit
    ))
@@ -114,7 +114,8 @@
 (autoload 'color-theme-blackboard "blackboard" nil t)
 
 ;; Default to my favorite color theme
-(color-theme-zenburn)
+(require 'blackboard)
+(color-theme-blackboard)
 
 
 
