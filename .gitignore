@@ -2,7 +2,7 @@
 *~
 .emacs.desktop*
 .smex-items
-bookmarks
+.mc-lists.el
 places
 session.*
 tramp

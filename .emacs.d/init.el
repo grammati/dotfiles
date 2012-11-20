@@ -49,8 +49,8 @@
 ;; Set up package archives
 (require 'package)
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives '("tromey" . "http://tromey.com/elpa/") t)
+;(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;(add-to-list 'package-archives '("tromey" . "http://tromey.com/elpa/") t)
 (package-initialize)
 
 ;; Function to install a list of packages
@@ -70,6 +70,7 @@
    idle-highlight-mode
    windsize
    expand-region
+   multiple-cursors
 
    ruby-mode
    css-mode
@@ -83,15 +84,18 @@
    coffee-mode
 
    clojure-mode
+   align-cljlet
    paredit
    nrepl
 
    auto-complete
    ac-nrepl
 
+   jtags
    scala-mode
    
    find-file-in-project
+   ack-and-a-half
    smex
 
    color-theme
@@ -100,6 +104,8 @@
    zenburn-theme
 
    magit
+
+   yasnippet-bundle
    ))
 
 ;; Install packages
@@ -401,7 +407,7 @@
 ;; Misc:
 (global-set-key (kbd "C-S-w")   'make-writable)
 (global-set-key (kbd "C-S-k")   'kill-this-buffer)
-(global-set-key (kbd "C-S-f")   'find-grep)
+(global-set-key (kbd "C-S-f")   'ack-and-a-half)
 (global-set-key (kbd "C-x M-d") 'dired-r)
 (global-set-key (kbd "<f8>")    'toggle-truncate-lines)
 
@@ -409,6 +415,13 @@
 (require 'windsize)
 (windmove-default-keybindings) ;; Shift+direction
 (windsize-default-keybindings) ;; C-S+direction
+
+;; Multiple cursors (mostly so the Sublime junkies can't be too smug)
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 ;; Other keybindings, mostly taken from ESK (becuase that's what I got used to in my first year of emacs):
 
