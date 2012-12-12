@@ -389,6 +389,13 @@
 (add-hook 'js-mode-hook         'esk-paredit-nonlisp)
 
 
+;; Clojure
+(add-hook 'clojure-mode-hook
+          '(lambda ()
+             (require 'align-cljlet)
+             (define-key clojure-mode-map (kbd "C-M-q") 'align-cljlet)))
+
+
 ;; Rails
 (when (file-exists-p "~/src/rinari")
   (add-to-list 'load-path "~/src/rinari")
@@ -401,6 +408,10 @@
   (setq buffer-display-table (make-display-table))
   (aset buffer-display-table ?\^M []))
 
+(defun look-of-disapproval ()
+  (interactive)
+  (insert (string-as-multibyte "ಠ_ಠ")))
+(global-set-key (kbd "C-x _") 'look-of-disapproval)
 
 ;; Key bindings
 
