@@ -22,6 +22,9 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
+;;
+(desktop-save-mode 1)
+
 (let ((is-mac (eq system-type 'darwin)))
   (custom-set-faces
    (if is-mac
@@ -84,6 +87,7 @@
    coffee-mode
 
    clojure-mode
+   clojure-test-mode
    align-cljlet
    paredit
    nrepl
@@ -109,10 +113,13 @@
    ))
 
 ;; Install packages
+(require 'color-theme)
 (ensure-packages-are-installed my-packages)
 
 
-;; Directories for stuff that's not in elpa or marmalade (eg: blackboard):
+;; Directories for stuff that's not in elpa or marmalade (eg:
+;; blackboard):
+(add-to-list 'load-path (expand-file-name "~/src/nrepl.el"))
 (add-to-list 'load-path (concat user-emacs-directory "extras"))
 
 ;; Autoloads don't seem to work for some stuff
@@ -120,9 +127,28 @@
 (autoload 'color-theme-blackboard "blackboard" nil t)
 
 ;; Default to my favorite color theme
-(require 'blackboard)
-(color-theme-blackboard)
+;(require 'blackboard)
+(color-theme-twilight)
 
+;;; ffip
+(eval-after-load 'find-file-in-project
+  '(setq ffip-patterns
+         (
+          "*.clj"
+          "*.css"
+          "*.el"
+          "*.html"
+          "*.java"
+          "*.js"
+          "*.md"
+          "*.org"
+          "*.py"
+          "*.rb"
+          "*.scala"
+          "*.sh"
+          "*.txt"
+          ))
+  '(add-to-list 'ffip-patterns "*.java"))
 
 
 (require 'expand-region)
@@ -183,7 +209,7 @@
       ido-auto-merge-work-directories-length nil
       ido-create-new-buffer 'always
       ido-use-filename-at-point 'guess
-      ido-use-virtual-buffers t
+      ido-use-virtual-buffers nil
       ido-handle-duplicate-virtual-buffers 2
       ido-max-prospects 10)
 
@@ -250,15 +276,6 @@
      (set-face-foreground 'magit-diff-add "green4")
      (set-face-foreground 'magit-diff-del "red3")))
 
-
-;; Change paredit bindings - I can't get used to some of the built-in ones.
-(eval-after-load 'paredit
-  '(progn
-     (define-key paredit-mode-map (kbd "C-<left>") nil)
-     (define-key paredit-mode-map (kbd "M-<left>") 'paredit-forward-barf-sexp)
-     (define-key paredit-mode-map (kbd "C-<right>") nil)
-     (define-key paredit-mode-map (kbd "M-<right>") 'paredit-forward-slurp-sexp)
-     ))
 
 
 (defun dired-insert-subdir-recursive ()
@@ -395,6 +412,10 @@
              (require 'align-cljlet)
              (define-key clojure-mode-map (kbd "C-M-q") 'align-cljlet)))
 
+(add-hook 'nrepl-mode-hook
+          '(lambda ()
+             (define-key clojure-mode-map (kbd "C-c z") 'nrepl-switch-to-repl-buffer)))
+
 
 ;; Rails
 (when (file-exists-p "~/src/rinari")
@@ -421,6 +442,7 @@
 (global-set-key (kbd "C-S-f")   'ack-and-a-half)
 (global-set-key (kbd "C-x M-d") 'dired-r)
 (global-set-key (kbd "<f8>")    'toggle-truncate-lines)
+
 
 ;; Window management - windmove to switch, windsize to resize
 (require 'windsize)
