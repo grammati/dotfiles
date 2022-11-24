@@ -1,10 +1,10 @@
 ##################################
 ## oh-my-zsh setup
-export OMZSH="$HOME/.oh-my-zsh"
-OMZSH_THEME="chris"
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="chris"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 plugins=(aws git vi-mode zsh-better-npm-completion)
-source $OMZSH/oh-my-zsh.sh
+source $ZSH/oh-my-zsh.sh
 
 ###################################
 ## Shell / Misc
