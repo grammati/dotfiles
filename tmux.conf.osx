@@ -1,9 +1,0 @@
-# tmux conf for osx
-set-option -g default-command "reattach-to-user-namespace -l zsh"
-bind y run "tmux save-buffer - | reattach-to-user-namespace pbcopy"
-
-# source config common to osx and linux
-source ~/.tmux.shared.conf
-
-run "/Users/chperki/anaconda3/bin/powerline-config tmux setup"
-

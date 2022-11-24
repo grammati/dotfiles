@@ -1,63 +1,36 @@
-# Source Zgen and create init file if necessary
-# Add custom Zsh plugins to .zgen-setup.zsh
-source ~/.zgen-setup.zsh
+##################################
+## oh-my-zsh setup
+export OMZSH="$HOME/.oh-my-zsh"
+OMZSH_THEME="chris"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+plugins=(aws git vi-mode zsh-better-npm-completion)
+source $OMZSH/oh-my-zsh.sh
 
-# Add customizations below
-
-################################################################################
-# Chris's stuff
-
-# for npm and all that crap
-# ulimit -n 8192
-
-zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-
-# Do not share history between tmux panes. Yay!
-setopt nosharehistory
-
-export EMACS_HOME=/Applications/Emacs.app/Contents/MacOS
-alias emacs="$EMACS_HOME/Emacs -nw --insecure"
-alias emacsw="$EMACS_HOME/Emacs --insecure"
-export EDITOR='emacsclient -t --alternate-editor=runemacs'
-alias e='emacsclient -t --alternate-editor=runemacs'
-
-export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+###################################
+## Shell / Misc
+export PATH=$HOME/bin:$PATH
 
 alias lr='ls -Altr'
-
-alias gp='git pull'
-alias gl='git lg'
-alias gs='git status'
-alias gr='git remote'
-alias grv='git remote -rv'
-alias lga='lg --all'
-
 alias t2='tree -L 2'
 alias t3='tree -L 3'
 
-alias flushdns='sudo dscacheutil -flushcache;sudo killall -HUP mDNSResponder;'
+###################################
+# AWS
+export AWS_PAGER=""
 
-# brew install coreutils
-alias truncate=gtruncate
-alias trunc='gtruncate --size 0'
+###################################
+# Emacs
+alias em='emacs'
+alias e='emacsclient'
 
-# Sqlplus
-#export SQLPLUS_HOME=$HOME/bin/instantclient_11_2
-#export PATH=$PATH:$SQLPLUS_HOME
-#export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$SQLPLUS_HOME
+###################################
+# Node
+alias nr='npm run'
+alias ni='npm install'
 
-# Anaconda
-export PATH="/Users/perch13/anaconda/bin:$PATH"
+###################################
+## Functions
 
-# Go
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
-
-# $HOME/bin
-export PATH=$HOME/bin:$PATH
-
-# AWS completion
-source /Users/perch13/anaconda/bin/aws_zsh_completer.sh
 gi() {
     cmd=`echo $1 | cut -c 2-`
     shift
@@ -65,20 +38,36 @@ gi() {
 }
 
 portfwd() {
-    args=''
-    for arg in $*; do
-        args="$args -L ${arg}:localhost:${arg}";
-    done
-    cmd="ssh -N ${args} chperki.aka.corp.amazon.com"
+    cmd="ssh -N -L $1:localhost:$1 $2"
     echo $cmd
     eval $cmd
 }
 
-fpath=(~/.zsh/completion $fpath)
-autoload -Uz compinit && compinit -i
+###################################
+# Terraform
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /opt/homebrew/bin/terraform terraform
 
-# AWS Completion
-source /usr/local/bin/aws_zsh_completer.sh
+###################################
+# Python
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/chris/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/chris/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/chris/opt/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/chris/opt/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
 
-# RVM
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+###################################
+## NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
