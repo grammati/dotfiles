@@ -1,7 +1,7 @@
 ##################################
 ## oh-my-zsh setup
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="chris"
+ZSH_THEME="af-magic"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 plugins=(aws git vi-mode zsh-better-npm-completion)
 source $ZSH/oh-my-zsh.sh
