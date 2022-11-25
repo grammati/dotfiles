@@ -3,8 +3,14 @@
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="af-magic"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
-plugins=(aws git vi-mode zsh-better-npm-completion)
+plugins=(aws vi-mode zsh-better-npm-completion)
 source $ZSH/oh-my-zsh.sh
+
+###################################
+## vi-mode
+
+# Bar cursor in insert mode, block in normal
+export VI_MODE_SET_CURSOR=true
 
 ###################################
 ## Shell / Misc
@@ -13,6 +19,27 @@ export PATH=$HOME/bin:$PATH
 alias lr='ls -Altr'
 alias t2='tree -L 2'
 alias t3='tree -L 3'
+
+###################################
+## zaw
+source $HOME/projects/zaw/zaw.zsh
+
+zstyle ':filter-select' max-lines 10
+zstyle ':filter-select' max-lines -10
+zstyle ':filter-select' hist-find-no-dups yes
+zstyle ':filter-select' extended-search yes
+zstyle ':filter-select' case-insensitive yes
+zstyle ':filter-select' rotate-list yes
+zstyle ':filter-select:highlight' selected fg=cyan,underline
+zstyle ':filter-select:highlight' matched fg=yellow
+zstyle ':filter-select:highlight' title fg=yellow,underline
+zstyle ':filter-select:highlight' marked bg=blue
+
+bindkey '^R^R' zaw-history
+
+bindkey -M filterselect '^J' down-line-or-history
+bindkey -M filterselect '^K' up-line-or-history
+bindkey -M filterselect '^[^M' accept-search # Alt-Enter to accept but not execute
 
 ###################################
 # AWS
