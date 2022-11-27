@@ -3,7 +3,7 @@
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="af-magic"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
-plugins=(aws vi-mode zsh-better-npm-completion)
+plugins=(asdf aws vi-mode zsh-better-npm-completion)
 source $ZSH/oh-my-zsh.sh
 
 ###################################
@@ -15,6 +15,9 @@ export VI_MODE_SET_CURSOR=true
 ###################################
 ## Shell / Misc
 export PATH=$HOME/bin:$PATH
+
+export EDITOR=nvim
+export VISUAL=nvim
 
 alias lr='ls -Altr'
 alias t2='tree -L 2'
@@ -97,4 +100,3 @@ unset __conda_setup
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
