@@ -4,6 +4,11 @@ for  = "unix"
 run  = 'shell "$SHELL" --block'
 desc = "Open $SHELL here"
 
+[[mgr.prepend_keymap]]
+on   = [ "g", "l" ]
+run  = "shell lgit --block"
+desc = "run lazygit"
+
 [[input.prepend_keymap]]
 on   = "<Esc>"
 run  = "close"
