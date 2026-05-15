@@ -9,6 +9,11 @@ on   = [ "g", "l" ]
 run  = "shell lgit --block"
 desc = "run lazygit"
 
+[[mgr.prepend_keymap]]
+on   = [ "g", "f" ]
+run  = 'shell "lgit --filter %h" --block'
+desc = "run lazygit"
+
 [[input.prepend_keymap]]
 on   = "<Esc>"
 run  = "close"
