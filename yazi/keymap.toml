@@ -33,3 +33,18 @@ on   = "T"
 run  = "plugin wide-preview"
 desc = "Toggle wide preview pane (1:1:6 vs 1:3:4)"
 
+[[mgr.prepend_keymap]]
+on   = [ "g", "s", "c" ]
+run  = 'shell -- pane=$(tmux split-window -h -c "$PWD" -P -F "#{pane_id}"); tmux send-keys -t "$pane" "claude" Enter'
+desc = "gs: Open Claude in tmux split (current dir)"
+
+[[mgr.prepend_keymap]]
+on   = [ "g", "s", "p" ]
+run  = 'shell -- tmux send-keys -t "{last}" a BSpace "$(printf "%s " $@)"; tmux last-pane'
+desc = "gs: Send paths to last pane and focus it"
+
+[[mgr.prepend_keymap]]
+on   = [ "g", "s", "P" ]
+run  = 'shell -- tmux send-keys -t "{last}" a BSpace "$(printf "%s " $@)"'
+desc = "gs: Send paths to last pane (stay in Yazi)"
+
