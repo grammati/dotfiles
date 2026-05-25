@@ -48,3 +48,8 @@ on   = [ "g", "s", "P" ]
 run  = 'shell -- tmux send-keys -t "{last}" a BSpace "$(printf "%s " $@)"'
 desc = "gs: Send paths to last pane (stay in Yazi)"
 
+[[mgr.prepend_keymap]]
+on   = [ "g", "s", "s" ]
+run  = 'shell -- tmux split-window -h -c "$PWD"'
+desc = "gs: Open teminal in tmux split (current dir)"
+
