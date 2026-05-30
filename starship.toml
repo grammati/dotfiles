@@ -1,0 +1,41 @@
+# Minimal prompt: directory, git branch, time (right-aligned), prompt char
+# Modules not listed in `format` are never shown.
+format = "$directory$git_branch $time$cmd_duration\n$character"
+# format = "$all"
+
+add_newline = true
+
+[directory]
+style = "bold cyan"
+fish_style_pwd_dir_length = 1
+truncation_length = 9
+truncate_to_repo = false
+truncation_symbol = "~/"
+
+
+[git_branch]
+format = " on [$branch]($style)"
+style = "yellow"
+symbol = ""
+
+[fill]
+symbol = " "
+
+[time]
+disabled = false
+format = "[$time]($style)"
+style = "dimmed white"
+time_format = "%H:%M:%S"
+
+[character]
+success_symbol = "[❯](green)"
+error_symbol = "[❯](red)"
+vimcmd_symbol = "[❮](dimmed yellow)"
+
+[cmd_duration]
+min_time = 1_000
+format = "  took [$duration]($style)"
+show_milliseconds = true
+show_notifications = true
+min_time_to_notify = 20_000
+
