@@ -1,7 +1,8 @@
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-[[ -s "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"
+# bun completion is loaded via fpath in core.zsh — sourcing it here would
+# register a runtime compdef that a later compinit (driving repo) wipes.
 alias br='bun run'
 
 # Node version manager — prefer fnm (fast), fall back to lazy-loaded NVM
