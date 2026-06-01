@@ -14,8 +14,9 @@ fx = [
 [open]
 prepend_rules = [
 	{ url = "*.json", use = ["edit", "fx"] },
+	{ url = "*.jsonl", use = ["edit", "fx"] },
 	{ url = "*.yaml", use = ["edit", "fx"] },
-	{ url = "*.ymml", use = ["edit", "fx"] },
+	{ url = "*.yml", use = ["edit", "fx"] },
 	{ url = "*.toml", use = ["edit", "fx"] }
 ]
 

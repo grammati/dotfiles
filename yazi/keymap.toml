@@ -53,3 +53,8 @@ on   = [ "g", "s", "s" ]
 run  = 'shell -- tmux split-window -h -c "$PWD"'
 desc = "gs: Open teminal in tmux split (current dir)"
 
+[[mgr.prepend_keymap]]
+on   = [ "t", "p" ]
+run  = 'shell -- tmux display-popup -EE -w 80% -h 80% -d "$PWD"'
+desc = "gs: Open teminal in tmux split (current dir)"
+
