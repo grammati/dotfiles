@@ -18,9 +18,8 @@ if command -v fzf &>/dev/null; then
     fi
     export FZF_DEFAULT_OPTS="--ansi --style full"
 
-    # ^R history: hide the leading history-index column (fzf still uses it
-    # internally to look up the command; --with-nth only affects display).
-    export FZF_CTRL_R_OPTS="--with-nth=2.."
+    # ^R history: hide the leading history-index column, and prioritize exact matches
+    export FZF_CTRL_R_OPTS="--with-nth=2.. --exact"
 
     _fzf_comprun() {
         local command=$1; shift
