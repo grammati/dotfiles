@@ -1,7 +1,7 @@
 require("lazy").setup({
   {
     "AstroNvim/AstroNvim",
-    version = "^5", -- Remove version tracking to elect for nightly AstroNvim
+    version = "^5", -- Pinned to v5: AstroNvim v6 requires nvim-treesitter `main`, whose tree-sitter-cli (>=0.26.1) can't run/build on this box's glibc 2.31. v5's classic treesitter compiles parsers with `cc`. See plugins/aerial.lua for the one 0.12 plugin override this combo needs.
     import = "astronvim.plugins",
     opts = { -- AstroNvim options must be set here with the `import` key
       mapleader = " ", -- This ensures the leader key must be configured before Lazy is set up
