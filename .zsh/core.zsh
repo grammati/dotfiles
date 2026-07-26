@@ -34,6 +34,23 @@ if [[ ! -e "$HOME/.zfunc/_fd" ]] && command -v fd &>/dev/null; then
     rm -f "$HOME/.zcompdump" "$HOME/.zcompdump.zwc"  # force compinit to pick it up
 fi
 
+# AWS CLI: wrap aws_completer in a native zsh function so it lives on fpath and
+# survives any later compinit (e.g. the driving repo's activate script).
+# To refresh after an aws-cli upgrade: rm ~/.zfunc/_aws, new shell.
+if [[ ! -e "$HOME/.zfunc/_aws" ]] && command -v aws_completer &>/dev/null; then
+    mkdir -p "$HOME/.zfunc"
+    cat > "$HOME/.zfunc/_aws" << 'AWSEOF'
+#compdef aws
+_aws() {
+    local -a completions
+    IFS=$'\n' completions=($(COMP_LINE="${BUFFER}" COMP_POINT="${CURSOR}" aws_completer 2>/dev/null))
+    compadd -Q -- "${completions[@]}"
+}
+_aws "$@"
+AWSEOF
+    rm -f "$HOME/.zcompdump" "$HOME/.zcompdump.zwc"
+fi
+
 autoload -Uz compinit
 if [[ -n "${HOME}/.zcompdump"(#qN.mh+24) ]]; then
     compinit
