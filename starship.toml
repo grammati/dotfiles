@@ -1,6 +1,6 @@
 # Minimal prompt: directory, git branch, time (right-aligned), prompt char
 # Modules not listed in `format` are never shown.
-format = "$directory$git_branch $time$cmd_duration\n$character"
+format = "$fill\n$directory$git_branch $time$cmd_duration\n$character"
 # format = "$all"
 
 add_newline = true
@@ -19,7 +19,8 @@ style = "yellow"
 symbol = ""
 
 [fill]
-symbol = " "
+symbol = '='
+style = 'bold green'
 
 [time]
 disabled = false
