@@ -58,6 +58,7 @@ portfwd() {
     echo "$cmd"
     eval "$cmd"
 }
+alias pf=portfwd
 
 # SSH reverse port forward: revportfwd <port> [host=vdi]
 revportfwd() {
